@@ -1,0 +1,28 @@
+<% layout("/layouts/boilerplate.ejs")-%>
+<% if (err && err.length > 0) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= err %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
+    <div class = "row">
+        <h1 class = "col-8 offset-2">Login</h1>
+        <div class = "col-8 offset-2">
+          <form method = "POST" action = "/login"  noValidate class = "needs-validation">
+               <div class = "mb-3">
+                   <label for = "username" class = "form-label">username</label>
+                   <input type = "text" id = "username" name = "username" class = "form-control" >
+                  
+               </div>
+                <div class = "mb-3">
+                    <label for = "password" class = "form-label">password</label>
+                    <input type = "password" id = "password" name = "password" class = "form-control" >
+
+                <div><button class = "btn btn-success mt-3">Login</button</div>
+
+            </form>
+        </div>
+        
+
+    </div>

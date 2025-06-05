@@ -1,0 +1,198 @@
+<%layout("/layouts/boilerplate.ejs")%>
+<%layout("/layouts/boilerplate.ejs")%>
+
+<% if(message && message.length>0) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert" id="flash-message">
+    <%= message %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<% if(err && err.length>0) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" id="flash-error">
+    <%= err %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<% if(logout && logout.length>0) { %>
+  <div class="alert alert-info alert-dismissible fade show" role="alert" id="flash-logout">
+    <%= logout %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+<style>
+    .filters-container {
+        padding: 20px 0;
+        align-items: center;
+    }
+    
+    .filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3.4rem;
+        margin-right: 2rem;
+        margin-top: 0.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .filter-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        opacity: 1;
+        transition: opacity 0.2s ease;
+        position: relative;
+        height: 40px; /* Reduced height */
+        margin-bottom: 10px; /* Space for text */
+    }
+    
+    .filter-item:hover {
+        opacity: 0.5;
+        cursor: pointer;
+    }
+    
+    .filter-icon {
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+        background: #f5f5f5;
+        padding: 10px;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+    
+    .filter-item:hover .filter-icon {
+        background: #e0e0ff;
+        transform: translateY(-2px);
+    }
+    
+    .filter-text {
+        position: absolute;
+        top: 40px; /* Adjusted to appear right below icon */
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 1;
+        font-size: 0.7rem;
+        padding: 3px 6px;
+        border-radius: 3px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        pointer-events: none;
+        z-index: 10;
+    }
+    
+    .filter-item:hover .filter-text {
+        opacity: 0.5;
+    }
+    .tax-info{
+        display:none;
+    }
+    .tax-toggle{
+        border:1px solid black;
+        border-radius: 1rem;
+        height:2.5 rem;
+        padding:1rem;
+        margin-left: auto;
+    }
+</style>
+
+<div id="filters">
+    <div class="filter">
+        <!-- Original Icons -->
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-fire"></i></div>
+            <p class="filter-text">Trending</p>
+        </div>
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-plane"></i></div>
+            <p class="filter-text">Flights</p>
+        </div>
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-hotel"></i></div>
+            <p class="filter-text">Resorts</p>
+        </div>
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-umbrella-beach"></i></div>
+            <p class="filter-text">Beach</p>
+        </div>
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-mountain"></i></div>
+            <p class="filter-text">Mountain</p>
+        </div>
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-car"></i></div>
+            <p class="filter-text">Rental</p>
+        </div>
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-passport"></i></div>
+            <p class="filter-text">Visa</p>
+        </div>
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-suitcase-rolling"></i></div>
+            <p class="filter-text">Luggage</p>
+        </div>
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-cow"></i></div>
+            <p class="filter-text">Boating</p>
+        </div>
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-cow"></i></div>
+            <p class="filter-text">Farms</p>
+        </div>
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-tree-city"></i></div>
+            <p class="filter-text">Cities</p>
+        </div>
+        <div class="filter-item">
+            <div class="filter-icon"><i class="fa-solid fa-person-swimming"></i></div>
+            <p class="filter-text">swim</p>
+        </div>
+        <div class = "tax-toggle">
+            <div class="form-check form-switch form-check-reverse">
+                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                <label class="form-check-label" for="switchCheckDefault">Taxation</label>
+            </div> 
+        </div>     
+    </div>
+   
+ </div>
+
+<div class="row row-cols-lg-3 row-cols-md-3  row-cols-sm-1">
+    <%for(let listing of allListings ){%>
+        <a href = "/Listing/<%=listing._id%>" class = "listing-link">
+            <div class = "card col" >
+                <img src = "<%=listing.image.url%>" class = "card-img-top" alt = "listing_image" style= "height:20rem"/>
+                <div class="card-img-overlay"></div>
+                <div class = "card-body">
+                    <p class = "card-text">
+                       <b><%=listing.title%></b>  <br />
+                       &#8377;<%=listing.price.toLocaleString("en-IN")%> /night
+                       <i class ="tax-info">&nbsp; &nbsp;+18% GST</i>
+                    </p>
+                </div>
+            </div>
+        </a>
+    <%}%>
+     
+</div>
+
+
+<script>
+    let tax = document.getElementById("switchCheckDefault");
+    tax.addEventListener("click",()=>{
+        let element = document.getElementsByClassName("tax-info");
+          for(c_tax of element){
+                 if(c_tax.style.display !="inline"){
+                    c_tax.style.display = "inline";
+                 }else{
+                    c_tax.style.display = "none";
+                 }
+          }
+
+    })
+    
+</script>

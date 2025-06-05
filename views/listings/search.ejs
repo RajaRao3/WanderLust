@@ -1,0 +1,88 @@
+<%layout("/layouts/boilerplate.ejs")%>
+<div id="countryCarousel" class="carousel slide">
+    <div class="carousel-indicators">
+        <% Listing_countryWise.forEach((list, index) => { %>
+            <button type="button" data-bs-target="#countryCarousel" 
+                    data-bs-slide-to="<%= index %>" 
+                    class="<%= index === 0 ? 'active' : '' %>" 
+                    aria-label="Slide <%= index + 1 %>"></button>
+        <% }); %>
+    </div>
+    <div class="carousel-inner">
+        <% Listing_countryWise.forEach((list, index) => { %>
+            <a href =  "/Listing/<%=list._id%>">
+                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                    <img src="<%= list.image.url %>" class="d-block w-100" alt="<%= list.title %>">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5><%= list.title %></h5>
+                        <p><%= list.description || 'Explore this beautiful destination' %></p>
+                    </div>
+                </div>
+
+            </a>
+            
+        <% }); %>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#countryCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#countryCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<style>
+    /* Set fixed height for desktop, adaptive on mobile */
+    .carousel-inner {
+      height: 500px;
+    }
+    
+    @media (max-width: 768px) {
+      .carousel-inner {
+        height: 300px;
+      }
+    }
+    
+    .carousel-item {
+      height: 100%;
+    }
+
+    .carousel-item img.d-block.w-100 {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Fill the container, crop excess */
+      border-radius: 10px;
+    }
+    
+    /* Optional: Improve caption visibility */
+    .carousel-caption {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+    
+    .carousel-caption h5,
+    .carousel-caption p {
+      color: #fff;
+      margin: 0;
+    }
+    
+    /* Customize carousel buttons */
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      padding: 10px;
+    }
+    
+    .carousel-indicators [data-bs-target] {
+      background-color: #000;
+    }
+    
+    .carousel-indicators .active {
+      background-color: #fff;
+    }
+    </style>
+    
